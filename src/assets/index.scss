@@ -1,0 +1,82 @@
+@import "./mixins";
+@font-face {
+  font-family: "Acens";
+  src: url("https://sfsl.xyz/fonts/Acens.woff2") format("woff2"),
+    url("https://sfsl.xyz/fonts/Acens.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eurostile";
+  src: url("https://sfsl.xyz/fonts/Eurostile.woff2") format("woff2"),
+    url("https://sfsl.xyz/fonts/Eurostile.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("https://sfsl.xyz/fonts/Helvetica.woff2") format("woff2"),
+    url("https://sfsl.xyz/fonts/Helvetica.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body,
+#app {
+  min-height: 100vh;
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+.top-dropdown-btn {
+  top: 0;
+  right: 0.75rem;
+}
+.top-brand {
+  top: 0;
+  left: 0.75rem;
+  font-size: 22px;
+  font-family: "Acens";
+  font-weight: bold;
+}
+
+.card-block {
+  margin-top: 40px;
+  div {
+    .card {
+      width: 100%;
+      height: 400px;
+    }
+
+    .card:hover {
+      opacity: 0.75;
+    }
+
+    .card.guevara {
+      @include card-theme(#ff8a00, aliceblue, azure);
+    }
+    .card.jackson {
+      @include card-theme(#b6090b, aliceblue, azure);
+    }
+    .card.sparrow {
+      @include card-theme(#873935, aliceblue, azure);
+    }
+    .card.dali {
+      @include card-theme(#4a588c, aliceblue, azure);
+    }
+  }
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}

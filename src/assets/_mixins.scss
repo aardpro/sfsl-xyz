@@ -1,0 +1,18 @@
+@mixin card-theme($background-color, $card-title-color, $card-text-color) {
+  .card-body {
+    background-color: $background-color;
+    .card-title {
+      color: $card-title-color;
+      font-family: 'Helvetica';
+    }
+    .card-text {
+      color: $card-text-color;
+      font-family: 'Eurostile';
+    }
+    .anchor {
+      color: $card-title-color;
+      bottom:12px;
+      right:12px;
+    }
+  }
+}
