@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 21:55:18
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-24 22:02:58
+ * @LastEditTime: 2021-03-25 23:19:24
  * @Description: 
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -15,7 +15,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.meta && to.meta.title) {
-    window.document.title = to.meta.title as string
+    window.document.title = 'SFSL - ' + to.meta.title as string
   }
   next()
 })

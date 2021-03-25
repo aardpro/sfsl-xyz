@@ -2,18 +2,18 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 10:25:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-24 22:19:09
+ * @LastEditTime: 2021-03-25 23:06:15
  * @Description: 
 -->
 <template>
-  <div class="col-xxl-3 col-md-4 col-sm-6 col-xs-12 position-relative">
-    <div class="card mb-3" :class="cardClass">
+  <div class="card-col position-relative">
+    <div class="card" :class="cardClass">
       <div class="card-body">
         <h5 class="card-title">{{ title }}</h5>
-        <img :src="img" :alt="title" class="w-100" />
+        <img v-if="img" :src="img" :alt="title" class="w-100" />
         <p class="card-text">{{ text }}</p>
-        <div class="position-absolute p-2 anchor">
-          <svg-icon icon='go' class-name="fs-2"></svg-icon>
+        <div v-if="icon" class="position-absolute anchor">
+          <svg-icon :icon="icon" class-name="fs-2em"></svg-icon>
         </div>
       </div>
     </div>
@@ -25,11 +25,11 @@ import { ref, defineComponent } from "vue";
 export default defineComponent({
   name: "SnapshotCard",
   props: {
-    cardClass: { type: String, default: "" },
+    cardClass: String,
     title: String,
     text: String,
     target: String,
-    anchorText: String,
+    icon: String,
     img: String,
   },
   setup: () => {

@@ -2,15 +2,13 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 10:25:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-24 22:11:53
+ * @LastEditTime: 2021-03-25 22:17:45
  * @Description: 
 -->
 <template>
-  <div class="row card-block">
+  <div class="container">
     <router-view></router-view>
   </div>
-  <div class="position-fixed top-brand">Code Tools</div>
-  <div class="position-fixed footer">Copyright</div>
 </template>
 
 <script lang="ts">

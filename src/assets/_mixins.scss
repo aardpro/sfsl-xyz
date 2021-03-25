@@ -1,18 +1,34 @@
+@mixin flex-display($direction: column, $align: center, $justify: center) {
+  display: flex;
+  flex-direction: $direction; //row | column | row-reverse | column-reverse |initial | inherit
+  align-items: $align; //flex-start | flex-end | center | baseline | stretch;
+  justify-content: $justify; //flex-start | flex-end | center | space-between | space-around;
+  box-sizing: border-box;
+}
+@mixin ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 @mixin card-theme($background-color, $card-title-color, $card-text-color) {
   .card-body {
+    padding: 2em;
     background-color: $background-color;
     .card-title {
       color: $card-title-color;
-      font-family: 'Helvetica';
+      font-family: "Helvetica";
+      font-size: fs-2em;
     }
     .card-text {
       color: $card-text-color;
-      font-family: 'Eurostile';
+      font-family: "Eurostile";
+      min-height: 4em;
     }
     .anchor {
       color: $card-title-color;
-      bottom:12px;
-      right:12px;
+      bottom: 1em;
+      right: 1em;
+      font-size: 2em;
     }
   }
 }
