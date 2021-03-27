@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 21:55:18
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-25 23:19:24
+ * @LastEditTime: 2021-03-27 12:03:46
  * @Description: 
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -21,3 +21,11 @@ router.beforeEach(async (to, from, next) => {
 })
 
 export default router
+
+export function safePush(params: any = '/'): void {
+  router.push(
+    params
+  ).catch(failure => {
+    console.error(failure)
+  })
+}

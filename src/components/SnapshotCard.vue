@@ -2,12 +2,12 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 10:25:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-25 23:06:15
+ * @LastEditTime: 2021-03-27 12:51:47
  * @Description: 
 -->
 <template>
-  <div class="card-col position-relative">
-    <div class="card" :class="cardClass">
+  <div class="col position-relative">
+    <div class="card" :class="cardClass" @click="redirect">
       <div class="card-body">
         <h5 class="card-title">{{ title }}</h5>
         <img v-if="img" :src="img" :alt="title" class="w-100" />
@@ -21,7 +21,9 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "vue";
+import { defineComponent } from "vue";
+import { safePush } from "../router";
+
 export default defineComponent({
   name: "SnapshotCard",
   props: {
@@ -32,8 +34,9 @@ export default defineComponent({
     icon: String,
     img: String,
   },
-  setup: () => {
-    return {};
+  setup: (props) => {
+    const redirect = () => safePush(props.target);
+    return { redirect };
   },
 });
 </script>

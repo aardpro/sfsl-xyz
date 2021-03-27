@@ -1,11 +1,10 @@
 @import "./_mixins";
 html,
-body,
-#app {
-  min-height: 100vh;
+body {
   height: 100%;
 }
 body {
+  min-height: 100vh;
   margin: 0;
 }
 .position-relative {
@@ -13,6 +12,29 @@ body {
 }
 .position-absolute {
   position: absolute;
+}
+
+.flex-left {
+  @include flex-display(row, center, flex-start);
+}
+.flex-right {
+  @include flex-display(row, center, flex-end);
+}
+.flex-center {
+  @include flex-display(row, center, center);
+}
+.flex-middle {
+  @include flex-display(column, center, center);
+}
+.flex-item {
+  flex: 1;
+}
+.flex-grow {
+  flex-grow: 1;
+}
+.flex-wrap {
+  @include flex-display(row, center, flex-start);
+  flex-wrap: wrap;
 }
 
 @for $i from 1 through 100 {
@@ -46,45 +68,52 @@ body {
   fill: currentColor;
   overflow: hidden;
 }
-.card-row {
-  @include flex-display(row, center, flex-start);
-  flex-wrap: wrap;
-  .card-col {
-    width: 47%;
-    margin: 2% 1% 2% 2%;
-    .card {
-      width: 100%;
-    }
 
-    .card:hover {
-      opacity: 0.75;
-    }
+#app {
+  min-height: 100%;
+  position: relative;
+  .home-container {
+    > .row {
+      .col {
+        .card {
+          width: 100%;
+          margin-bottom: 1em;
+          cursor: pointer;
+        }
 
-    .card.guevara {
-      @include card-theme(#ff8a00, aliceblue, azure);
-    }
-    .card.jackson {
-      @include card-theme(#b6090b, aliceblue, azure);
-    }
-    .card.sparrow {
-      @include card-theme(#873935, aliceblue, azure);
-    }
-    .card.dali {
-      @include card-theme(#4a588c, aliceblue, azure);
-    }
-    .card.einstein {
-      @include card-theme(aliceblue, #333, #222);
+        .card:hover {
+          opacity: 0.75;
+        }
+
+        .card.guevara {
+          @include card-theme(#ff8a00, aliceblue, azure);
+        }
+        .card.jackson {
+          @include card-theme(#b6090b, aliceblue, azure);
+        }
+        .card.sparrow {
+          @include card-theme(#873935, aliceblue, azure);
+        }
+        .card.dali {
+          @include card-theme(#4a588c, aliceblue, azure);
+        }
+        .card.einstein {
+          @include card-theme(aliceblue, #333, #222);
+        }
+      }
     }
   }
-}
-.copy-right {
-  background-color: #4a588c;
-  padding: 2em;
-  margin: auto 2%;
-  @include flex-display(column, center, center);
-  font-family: "Eurostile";
-  font-size: 1.2em;
-  a {
-    color: aliceblue;
+
+  .footer {
+    position: absolute;
+    width: 100%;
+    padding: 2em;
+    @include flex-display(column, center, center);
+    font-family: "Eurostile";
+    font-size: 1.2em;
+    color: #333;
+    a {
+      color: #333;
+    }
   }
 }

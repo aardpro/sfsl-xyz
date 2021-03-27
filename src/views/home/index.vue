@@ -2,19 +2,18 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-25 23:00:24
+ * @LastEditTime: 2021-03-27 14:17:01
  * @Description: 
 -->
 <template>
-  <div class="card-row">
+  <div
+    class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-xl-3 row-cols-xxl-4"
+  >
     <snapshot-card
       v-for="(card, index) in CardList"
       :key="index"
       v-bind="card"
-    ></snapshot-card>    
-  </div>
-  <div class="row">
-    <div class="copy-right">@copyright 2018-2021 <a href='http://beian.miit.gov.cn/'>粤ICP备18001137号</a></div>
+    ></snapshot-card>
   </div>
 </template>
 

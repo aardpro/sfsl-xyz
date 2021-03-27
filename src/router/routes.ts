@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 21:55:45
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-24 22:13:01
+ * @LastEditTime: 2021-03-27 14:56:16
  * @Description: 
  */
 import { RouteRecordRaw } from 'vue-router'
@@ -24,9 +24,9 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/vue3-image-slim',
-    name: 'Vue3ImageSlim',
-    component: () => import('../views/vue3-image-slim/index.vue'),
+    path: '/vue-image-slim',
+    name: 'VueImageSlim',
+    component: () => import('../views/vue-image-slim/index.vue'),
     meta: {
       title: 'vue3-image-slim'
     }
@@ -48,9 +48,9 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/html-coder',
-    name: 'HTMLCoder',
-    component: () => import('../views/html-coder/index.vue'),
+    path: '/html-graffiti',
+    name: 'HTML Graffiti',
+    component: () => import('../views/html-graffiti/index.vue'),
     meta: {
       title: 'HTML Coder'
     }

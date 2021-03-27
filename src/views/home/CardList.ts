@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-25 23:34:41
+ * @LastEditTime: 2021-03-27 16:11:43
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -16,9 +16,9 @@ interface IFunctionCard {
 export const CardList: IFunctionCard[] = [
   {
     cardClass: 'sparrow',
-    title: 'vue3-image-slim',
-    text: 'Vue3 component to crop and optimize your images before you upload them',
-    target: 'vue3-image-slim',
+    title: 'vue-image-slim',
+    text: 'Vue component to crop and optimize your images before you upload them',
+    target: 'vue-image-slim',
     icon: 'go',
     img: './images/sparrow.jpg'
   },
@@ -50,7 +50,7 @@ export const CardList: IFunctionCard[] = [
     cardClass: 'einstein',
     title: 'JWT Decoder',
     text: 'Decode JWT string and show you the contained info',
-    target: 'jwt-encoder',
+    target: 'jwt-decoder',
     icon: 'go',
     img: './images/einstein.jpg'
   }
