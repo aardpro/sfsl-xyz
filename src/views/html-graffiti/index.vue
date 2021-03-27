@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-27 15:55:01
+ * @LastEditTime: 2021-03-28 01:53:53
  * @Description: 
 -->
 <template>
@@ -51,6 +51,7 @@ export default defineComponent({
         `ad>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+      <link href="./default.css" rel="stylesheet">
   </he` +
         `ad><bo` +
         `dy>` +

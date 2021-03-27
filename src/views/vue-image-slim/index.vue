@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-27 12:29:36
+ * @LastEditTime: 2021-03-28 01:46:34
  * @Description: 
 -->
 <template>
@@ -69,28 +69,24 @@
           :o="o"
           :w="w"
           :h="h"
-          :btnWidth="btnWidth"
-          :btnHeight="btnHeight"
+          :btn-width="btnWidth"
+          :btn-height="btnHeight"
           :disabled="disabled"
           @getDataURL="getDataURL"
         ></vue3-image-slim>
       </div>
     </div>
   </div>
-  <div class="row">
-    <img
-      v-for="(img, index) in images"
-      :key="index"
-      :src="img"
-      class="slim-img"
-    />
+  <div class="flex-wrap">
+    <div v-for="(img, index) in images" :key="index" class="pad-10">
+      <img :src="img" class="auto-image" />
+    </div>
   </div>
 </template>
 
 <script type='ts'>
 import { defineComponent, ref, computed } from "vue";
 import Vue3ImageSlim from "vue3-image-slim";
-import "vue3-image-slim/dist/default.css";
 
 export default defineComponent({
   name: "VueImageSlim",
@@ -159,13 +155,9 @@ select {
   margin: 1em 1em 1em 0.4em;
 }
 input {
-  width: 4em;
+  width: 5em;
 }
 input[type="checkbox"] {
   width: 1em;
-}
-.slim-img {
-  width: auto;
-  height: auto;
 }
 </style>

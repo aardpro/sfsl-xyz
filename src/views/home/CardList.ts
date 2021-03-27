@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-27 16:11:43
+ * @LastEditTime: 2021-03-28 01:58:00
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -25,7 +25,7 @@ export const CardList: IFunctionCard[] = [
   {
     cardClass: 'guevara',
     title: 'HTML Graffiti',
-    text: 'Run your html,css and javascript codes',
+    text: 'Run your html,css and javascript codes, display the result',
     target: 'html-graffiti',
     icon: 'go',
     img: './images/guevara.jpg'

@@ -52,12 +52,12 @@ body {
   }
 }
 
-@for $i from 1 through 10 {
+@for $i from 1 through 20 {
   .mar-#{$i} {
-    margin: 2px * $i;
+    margin: 1px * $i;
   }
   .pad-#{$i} {
-    padding: 2px * $i;
+    padding: 1px * $i;
   }
 }
 
@@ -67,6 +67,11 @@ body {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+}
+
+.auto-image {
+  width: auto;
+  height: auto;
 }
 
 #app {
@@ -106,6 +111,7 @@ body {
 
   .footer {
     position: absolute;
+    bottom: 0;
     width: 100%;
     padding: 2em;
     @include flex-display(column, center, center);

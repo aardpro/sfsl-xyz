@@ -12,12 +12,13 @@
 }
 @mixin card-theme($background-color, $card-title-color, $card-text-color) {
   .card-body {
-    padding: 2em;
+    padding: 1em;
     background-color: $background-color;
     .card-title {
       color: $card-title-color;
       font-family: "Helvetica";
-      font-size: fs-2em;
+      font-size: 1.6em;
+      padding: 1em;
     }
     .card-text {
       color: $card-text-color;

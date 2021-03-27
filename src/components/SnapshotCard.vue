@@ -2,14 +2,14 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 10:25:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-27 12:51:47
+ * @LastEditTime: 2021-03-28 01:57:00
  * @Description: 
 -->
 <template>
   <div class="col position-relative">
     <div class="card" :class="cardClass" @click="redirect">
       <div class="card-body">
-        <h5 class="card-title">{{ title }}</h5>
+        <div class="card-title">{{ title }}</div>
         <img v-if="img" :src="img" :alt="title" class="w-100" />
         <p class="card-text">{{ text }}</p>
         <div v-if="icon" class="position-absolute anchor">
