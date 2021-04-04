@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 20:32:39
+ * @LastEditTime: 2021-04-04 21:21:46
  * @Description: 
 -->
 <template>
@@ -19,11 +19,17 @@
         <svg-icon
           icon="arrow-right"
           font-size="48px"
+          :color="color"
           @click="toData"
         ></svg-icon>
       </div>
       <div class="btn-div">
-        <svg-icon icon="arrow-left" font-size="48px" @click="toJson"></svg-icon>
+        <svg-icon
+          icon="arrow-left"
+          font-size="48px"
+          :color="color"
+          @click="toJson"
+        ></svg-icon>
       </div>
     </div>
     <div class="run-col">
@@ -36,7 +42,7 @@
   </div>
 
   <div class="run-go-home">
-    <go-home font-size="30px" color="#b6090b"></go-home>
+    <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
@@ -93,6 +99,7 @@ export default defineComponent({
       refData,
       toData,
       toJson,
+      color: "#b6090b",
     };
   },
 });

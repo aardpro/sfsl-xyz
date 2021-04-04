@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-28 01:58:00
+ * @LastEditTime: 2021-04-04 21:07:40
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -25,7 +25,7 @@ export const CardList: IFunctionCard[] = [
   {
     cardClass: 'guevara',
     title: 'HTML Graffiti',
-    text: 'Run your html,css and javascript codes, display the result',
+    text: 'Preview your html,css and javascript codes.',
     target: 'html-graffiti',
     icon: 'go',
     img: './images/guevara.jpg'
@@ -33,7 +33,7 @@ export const CardList: IFunctionCard[] = [
   {
     cardClass: 'dali',
     title: 'JSRun',
-    text: 'Run javascript codes and display the console.logs',
+    text: 'Run javascript codes and display the console.log',
     target: 'jsrun',
     icon: 'go',
     img: './images/dali.jpg'
@@ -41,7 +41,7 @@ export const CardList: IFunctionCard[] = [
   {
     cardClass: 'jackson',
     title: 'JSON Data',
-    text: 'A JSON string and variable data transformer',
+    text: 'Transformers between JSON string and variable data',
     target: 'json-data',
     icon: 'go',
     img: './images/jackson.jpg'
@@ -49,7 +49,7 @@ export const CardList: IFunctionCard[] = [
   {
     cardClass: 'einstein',
     title: 'JWT Decoder',
-    text: 'Decode JWT string and show you the contained info',
+    text: 'Decode JWT string and show the contained data',
     target: 'jwt-decoder',
     icon: 'go',
     img: './images/einstein.jpg'

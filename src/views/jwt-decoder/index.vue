@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 20:27:20
+ * @LastEditTime: 2021-04-04 21:08:41
  * @Description: 
 -->
 <template>
@@ -15,13 +15,12 @@
       ></textarea>
     </div>
     <div class="btn-col flex-middle">
-      <div class="btn-div">
-        <svg-icon
-          icon="arrow-right"
-          font-size="48px"
-          @click="toData"
-        ></svg-icon>
-      </div>
+      <svg-icon
+        icon="arrow-right"
+        font-size="48px"
+        :color="color"
+        @click="toData"
+      ></svg-icon>
     </div>
     <div class="run-col">
       <textarea
@@ -33,7 +32,7 @@
   </div>
 
   <div class="run-go-home">
-    <go-home font-size="30px" color="#333"></go-home>
+    <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
@@ -82,6 +81,7 @@ export default defineComponent({
       refJwt,
       refData,
       toData,
+      color: "#333",
     };
   },
 });
@@ -93,9 +93,6 @@ export default defineComponent({
   height: 100vh;
   @include flex-display(row, stretch, flex-start);
   .btn-col {
-    .btn-div + .btn-div {
-      margin-top: 2em;
-    }
     width: 120px;
     box-sizing: border-box;
   }

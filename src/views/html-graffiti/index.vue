@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 20:28:51
+ * @LastEditTime: 2021-04-04 21:22:48
  * @Description: 
 -->
 <template>
@@ -15,13 +15,18 @@
       ></textarea>
     </div>
     <div class="btn-col flex-middle">
-      <button class="bttn-material-flat bttn-sm" @click="run">Graffiti</button>
+      <svg-icon
+        icon="arrow-right"
+        font-size="48px"
+        :color="color"
+        @click="run"
+      ></svg-icon>
     </div>
     <div ref="refView" class="graffiti-col"></div>
   </div>
 
   <div class="graffiti-go-home">
-    <go-home font-size="30px" color="#ff8a00"></go-home>
+    <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
@@ -83,6 +88,7 @@ export default defineComponent({
       refCode,
       refView,
       run,
+      color: "#ff8a00",
     };
   },
 });

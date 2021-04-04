@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 20:33:30
+ * @LastEditTime: 2021-04-04 21:23:50
  * @Description: 
 -->
 <template>
@@ -15,7 +15,12 @@
       ></textarea>
     </div>
     <div class="btn-col flex-middle">
-      <button class="bttn-material-flat bttn-sm" @click="run">JSRun</button>
+      <svg-icon
+        icon="arrow-right"
+        font-size="48px"
+        :color="color"
+        @click="run"
+      ></svg-icon>
     </div>
     <div class="run-col">
       <textarea ref="refLog" class="code-textarea form"></textarea>
@@ -23,7 +28,7 @@
   </div>
 
   <div class="run-go-home">
-    <go-home font-size="30px" color="#4a588c"></go-home>
+    <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
@@ -83,6 +88,7 @@ export default defineComponent({
       refCode,
       refLog,
       run,
+      color: "#4a588c",
     };
   },
 });
