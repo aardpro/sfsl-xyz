@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-28 01:46:34
+ * @LastEditTime: 2021-04-04 18:10:20
  * @Description: 
 -->
 <template>
@@ -78,9 +78,15 @@
     </div>
   </div>
   <div class="flex-wrap">
-    <div v-for="(img, index) in images" :key="index" class="pad-10">
+    <div v-for="(img, index) in images" :key="index" class="pad-10 image-view">
       <img :src="img" class="auto-image" />
+      <div class="block-delete">
+        <svg-icon icon="delete" @click="askDelete(index)"></svg-icon>
+      </div>
     </div>
+  </div>
+  <div style="position:fixed;top:1em;right:1em;">
+    <go-home font-size="30px" color="#873935"></go-home>
   </div>
 </template>
 
@@ -93,7 +99,6 @@ export default defineComponent({
   components: { Vue3ImageSlim },
   props: {},
   setup(props, context) {
-    const dataURL = ref("");
     const images = ref([]);
     const w = ref(400);
     const h = ref(300);
@@ -111,28 +116,29 @@ export default defineComponent({
       { value: "RB", label: "右下角" },
     ]);
     const getDataURL = (val) => {
-      dataURL.value = val;
       images.value.push(val);
     };
     const comStr = computed(
       () =>
         `      <vue-image-slim
-        o="${o.value}"
         :w="${w.value}"
         :h="${h.value}"
-        btnWidth="${btnWidth.value}"
-        btnHeight="${btnHeight.value}"
+        o="${o.value}"
+        btn-width="${btnWidth.value}"
+        btn-height="${btnHeight.value}"
         :disabled="${disabled.value}"
         @getDataURL="getDataURL"
         @getFile="getFile"
       ></vue-image-slim>
 `
     );
+    const askDelete = (index) => {
+      images.value.splice(index, 1);
+    };
     return {
       w,
       h,
       o,
-      dataURL,
       images,
       getDataURL,
       btnWidth,
@@ -142,6 +148,7 @@ export default defineComponent({
       disabled,
       origins,
       comStr,
+      askDelete,
     };
   },
 });
@@ -159,5 +166,18 @@ input {
 }
 input[type="checkbox"] {
   width: 1em;
+}
+.image-view {
+  position: relative;
+}
+.image-view .block-delete {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+.image-view .block-delete .icon {
+  font-size: 2em;
+  color: red;
+  cursor: pointer;
 }
 </style>

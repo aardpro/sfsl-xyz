@@ -2,22 +2,26 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-28 01:53:53
+ * @LastEditTime: 2021-04-04 20:28:51
  * @Description: 
 -->
 <template>
-  <div class="row html-graffiti">
-    <div class="col-5">
+  <div class="html-graffiti">
+    <div class="code-col">
       <textarea
         ref="refCode"
         placeholder="type html, css, javascript code here"
-        class="graffiti-code form"
+        class="code-textarea form"
       ></textarea>
     </div>
-    <div class="col flex-middle">
+    <div class="btn-col flex-middle">
       <button class="bttn-material-flat bttn-sm" @click="run">Graffiti</button>
     </div>
-    <div ref="refView" class="col-5 graffiti-view"></div>
+    <div ref="refView" class="graffiti-col"></div>
+  </div>
+
+  <div class="graffiti-go-home">
+    <go-home font-size="30px" color="#ff8a00"></go-home>
   </div>
 </template>
 
@@ -30,7 +34,7 @@ export default defineComponent({
   name: "HTMLGraffiti",
   components: {},
   props: {},
-  setup(props, context) {
+  setup() {
     const refView = ref();
     const refCode = ref();
     const run = () => {
@@ -63,10 +67,15 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      const storeData = localStorage.getItem(STORE_VIEW);
-      if (storeData) {
-        refCode.value.value = storeData;
+      let storeData = localStorage.getItem(STORE_VIEW);
+      if (!storeData) {
+        storeData =
+          '<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.0-beta2/css/bootstrap.min.css" rel="stylesheet">\n<h1>Hellow world</h1>\n<h3>Hellow world</h3>\n<div id=sample></div>\n<script';
+        storeData +=
+          '>\n  document.getElementById("sample").innerText="Hello world!"\n</scr';
+        storeData += "ipt>\n";
       }
+      refCode.value.value = storeData;
       run();
     });
 
@@ -79,19 +88,38 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.graffiti-view,
-.graffiti-code {
-  height: calc(100vh - 1em);
-  box-sizing: border-box;
-}
-.graffiti-code {
+@import "../../assets/_mixins.scss";
+.html-graffiti {
   width: 100%;
-}
-
-.graffiti-view {
-  border: 1px solid #ccc;
-  iframe {
-    border: 0;
+  height: 100vh;
+  @include flex-display(row, stretch, flex-start);
+  .btn-col {
+    width: 120px;
+    box-sizing: border-box;
   }
+  .code-col,
+  .graffiti-col {
+    flex: 1;
+    box-sizing: border-box;
+  }
+  .code-col {
+    .code-textarea {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .graffiti-col {
+    border: 1px solid #ccc;
+    iframe {
+      border: 0;
+    }
+  }
+}
+.graffiti-go-home {
+  position: fixed;
+  top: 1em;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
