@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-04-10 09:55:48
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 15:43:19
+ * @LastEditTime: 2021-04-11 16:10:53
  * @Description: 将结果保存在服务器
 -->
 <template>
@@ -46,7 +46,7 @@ export default defineComponent({
           "https://github.com/login/oauth/authorize?client_id=aef4a64b87a77c313674&allow_signup=true&redirect_uri=" +
             encodeURI("https://sfsl.xyz/xyz/index.php?route=/github"),
           "GITHUB-AUTH",
-          "height=600,width=800,location=no,menubar=no,resizable=no,status=yes,toolbar=no,top=200,left=500"
+          "height=800,width=600,location=no,menubar=no,resizable=no,status=yes,toolbar=no,top=200,left=500"
         );
         if (wauth) {
           wauth.document.title = "GITHUB AUTHORIZTION";

@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 13:43:10
+ * @LastEditTime: 2021-04-11 20:15:09
  * @Description: 
 -->
 <template>
@@ -63,7 +63,7 @@ export default defineComponent({
       iframe.setAttribute("width", "100%");
       iframe.setAttribute(
         "sandbox",
-        "allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts"
+        "allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin"
       );
       iframe.srcdoc =
         `<!DOCTYPE html>

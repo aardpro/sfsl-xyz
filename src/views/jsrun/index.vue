@@ -43,6 +43,7 @@ import {
   provide,
   watch,
 } from "vue";
+import { getCode } from "../../api";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { JSRUN_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_VIEW = "STORE-JSRUN";
