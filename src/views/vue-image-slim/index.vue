@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 18:10:20
+ * @LastEditTime: 2021-04-10 00:42:01
  * @Description: 
 -->
 <template>
@@ -59,21 +59,22 @@
     </div>
     <div class="row">
       <div class="col-12 flex-left">
-        <pre style="font-family: Helvetica">{{ comStr }}</pre>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 flex-left">
-        点击按钮选择图片文件
-        <vue3-image-slim
-          :o="o"
-          :w="w"
-          :h="h"
-          :btn-width="btnWidth"
-          :btn-height="btnHeight"
-          :disabled="disabled"
-          @getDataURL="getDataURL"
-        ></vue3-image-slim>
+        <div class="flex-left">
+          <div id="vue-image-slim-screen"></div>
+          <div id="vue3-image-slim-screen"></div>
+          <div class="flex-middle">
+            <div class="pad-10">点击按钮选择图片文件</div>
+            <vue3-image-slim
+              :o="o"
+              :w="w"
+              :h="h"
+              :btn-width="btnWidth"
+              :btn-height="btnHeight"
+              :disabled="disabled"
+              @getDataURL="getDataURL"
+            ></vue3-image-slim>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -81,24 +82,30 @@
     <div v-for="(img, index) in images" :key="index" class="pad-10 image-view">
       <img :src="img" class="auto-image" />
       <div class="block-delete">
-        <svg-icon icon="delete" @click="askDelete(index)"></svg-icon>
+        <svg-icon
+          icon="delete"
+          class-name="pointer"
+          @click="askDelete(index)"
+        ></svg-icon>
       </div>
     </div>
   </div>
-  <div style="position:fixed;top:1em;right:1em;">
+  <div style="position: fixed; top: 1em; right: 1em">
     <go-home font-size="30px" color="#873935"></go-home>
   </div>
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import Vue3ImageSlim from "vue3-image-slim";
+import CodeFlask from "codeflask";
 
 export default defineComponent({
   name: "VueImageSlim",
   components: { Vue3ImageSlim },
   props: {},
   setup(props, context) {
+    let cfv2, cfv3;
     const images = ref([]);
     const w = ref(400);
     const h = ref(300);
@@ -118,23 +125,76 @@ export default defineComponent({
     const getDataURL = (val) => {
       images.value.push(val);
     };
-    const comStr = computed(
-      () =>
-        `      <vue-image-slim
-        :w="${w.value}"
-        :h="${h.value}"
-        o="${o.value}"
-        btn-width="${btnWidth.value}"
-        btn-height="${btnHeight.value}"
-        :disabled="${disabled.value}"
-        @getDataURL="getDataURL"
-        @getFile="getFile"
-      ></vue-image-slim>
+    const comCodeV2 = computed(
+      () =>`//install and import it for vue2
+npm install vue-image-slim
+components: { VueImageSlim:() => import("vue-image-slim") }
+
+// how to use in template
+<vue-image-slim
+ :w="${w.value}"
+ :h="${h.value}"
+ o="${o.value}"
+ btn-width="${btnWidth.value}"
+ btn-height="${btnHeight.value}"
+ :disabled="${disabled.value}"
+ @getDataURL="getDataURL"
+ @getFile="getFile"
+></vue-image-slim>
+`
+    );
+    const comCodeV3 = computed(
+      () =>`//install and import it for vue3
+npm install vue3-image-slim
+import Vue3ImageSlim from "vue3-image-slim"
+components: { Vue3ImageSlim }
+  
+// how to use in template
+<vue3-image-slim
+ :w="${w.value}"
+ :h="${h.value}"
+ o="${o.value}"
+ btn-width="${btnWidth.value}"
+ btn-height="${btnHeight.value}"
+ :disabled="${disabled.value}"
+ @getDataURL="getDataURL"
+ @getFile="getFile"
+></vue3-image-slim>
 `
     );
     const askDelete = (index) => {
       images.value.splice(index, 1);
     };
+    watch(
+      () => comCodeV2.value,
+      (val) => {
+        if (cfv2) {
+          cfv2.updateCode(val);
+        }
+      }
+    );
+    watch(
+      () => comCodeV3.value,
+      (val) => {
+        if (cfv3) {
+          cfv3.updateCode(val);
+        }
+      }
+    );
+    onMounted(() => {
+      cfv2 = new CodeFlask("#vue-image-slim-screen", {
+        language: "js",
+        lineNumbers: true,
+        readonly: true,
+      });
+      cfv2.updateCode(comCodeV2.value);
+      cfv3 = new CodeFlask("#vue3-image-slim-screen", {
+        language: "js",
+        lineNumbers: true,
+        readonly: true,
+      });
+      cfv3.updateCode(comCodeV3.value);
+    });
     return {
       w,
       h,
@@ -147,7 +207,6 @@ export default defineComponent({
       btnh,
       disabled,
       origins,
-      comStr,
       askDelete,
     };
   },
@@ -179,5 +238,19 @@ input[type="checkbox"] {
   font-size: 2em;
   color: red;
   cursor: pointer;
+}
+#vue-image-slim-screen,
+#vue3-image-slim-screen {
+  position: relative;
+  height: 400px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#vue-image-slim-screen {
+  width: 480px;
+}
+#vue3-image-slim-screen {
+  margin: 0 50px;
+  width: 400px;
 }
 </style>

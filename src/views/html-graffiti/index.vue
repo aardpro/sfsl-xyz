@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 21:22:48
+ * @LastEditTime: 2021-04-11 13:43:10
  * @Description: 
 -->
 <template>
@@ -17,22 +17,34 @@
     <div class="btn-col flex-middle">
       <svg-icon
         icon="arrow-right"
+        class-name="pointer"
         font-size="48px"
         :color="color"
         @click="run"
       ></svg-icon>
+      <SaveCloudButton :color="color"></SaveCloudButton>
     </div>
     <div ref="refView" class="graffiti-col"></div>
   </div>
 
-  <div class="graffiti-go-home">
+  <div class="top-go-home">
     <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  onBeforeMount,
+  onMounted,
+  provide,
+  watch,
+} from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { removeAllChildNodes } from "../../utils";
+import { GRAFFITI_DATA as SAMPLE_DATA } from "../../utils/data";
+import { getCode } from "../../api";
 const STORE_VIEW = "STORE-GRAFFITI";
 
 export default defineComponent({
@@ -40,6 +52,7 @@ export default defineComponent({
   components: {},
   props: {},
   setup() {
+    const id = ref();
     const refView = ref();
     const refCode = ref();
     const run = () => {
@@ -70,20 +83,37 @@ export default defineComponent({
         `ml>`;
       refView.value.append(iframe);
     };
-
     onMounted(() => {
-      let storeData = localStorage.getItem(STORE_VIEW);
-      if (!storeData) {
-        storeData =
-          '<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.0-beta2/css/bootstrap.min.css" rel="stylesheet">\n<h1>Hellow world</h1>\n<h3>Hellow world</h3>\n<div id=sample></div>\n<script';
-        storeData +=
-          '>\n  document.getElementById("sample").innerText="Hello world!"\n</scr';
-        storeData += "ipt>\n";
-      }
+      let storeData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
       refCode.value.value = storeData;
       run();
     });
 
+    onBeforeMount(() => {
+      id.value = useRoute().params.id;
+    });
+    onBeforeRouteUpdate(async (to) => {
+      id.value = to.params.id;
+    });
+    provide("getId", () => id.value);
+    provide("getContent", () => refCode.value.value);
+
+    watch(
+      () => id.value,
+      async (val) => {
+        if (!val) {
+          return;
+        }
+        const res = await getCode(val);
+        if (res.code) {
+          return;
+        }
+        if (refCode.value) {
+          refCode.value.value = res.data.content;
+          run();
+        }
+      }
+    );
     return {
       refCode,
       refView,
@@ -121,11 +151,5 @@ export default defineComponent({
       border: 0;
     }
   }
-}
-.graffiti-go-home {
-  position: fixed;
-  top: 1em;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

@@ -8,6 +8,7 @@
 <template>
   <svg-icon
     icon="home"
+    class-name="pointer"
     @click="$router.replace('/')"
     :style="{ fontSize, color }"
   ></svg-icon>

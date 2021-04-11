@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 21:55:45
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-03-27 14:56:16
+ * @LastEditTime: 2021-04-11 12:00:59
  * @Description: 
  */
 import { RouteRecordRaw } from 'vue-router'
@@ -20,7 +20,8 @@ const routes: RouteRecordRaw[] = [
     name: 'HomePage',
     component: () => import('../views/home/index.vue'),
     meta: {
-      title: 'Home'
+      title: 'Home',
+      notFluid: true
     }
   },
   {
@@ -32,7 +33,7 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/jsrun',
+    path: '/jsrun/:id?',
     name: 'JSRun',
     component: () => import('../views/jsrun/index.vue'),
     meta: {
@@ -40,7 +41,7 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/json-data',
+    path: '/json-data/:id?',
     name: 'JsonData',
     component: () => import('../views/json-data/index.vue'),
     meta: {
@@ -48,20 +49,36 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/html-graffiti',
-    name: 'HTML Graffiti',
+    path: '/graffiti/:id?',
+    name: 'HTMLGraffiti',
     component: () => import('../views/html-graffiti/index.vue'),
     meta: {
-      title: 'HTML Coder'
+      title: 'HTML Graffiti'
     }
   },
   {
-    path: '/jwt-decoder',
+    path: '/jwt-decoder/:id?',
     name: 'JWTDecoder',
     component: () => import('../views/jwt-decoder/index.vue'),
     meta: {
       title: 'JWT Decoder'
     },
-  }
+  },
+  {
+    path: '/cloud-code',
+    name: 'CloudCode',
+    component: () => import('../views/cloud-code/index.vue'),
+    meta: {
+      title: 'Cloud Code', notFluid: true
+    },
+  },
+  {
+    path: '/token/:token',
+    name: 'AccessToken',
+    component: () => import('../views/login/token.vue'),
+    meta: {
+      title: 'AccessToken'
+    },
+  },
 ]
 export default routes

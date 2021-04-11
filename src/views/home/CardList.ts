@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 21:07:40
+ * @LastEditTime: 2021-04-11 14:09:33
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -26,7 +26,7 @@ export const CardList: IFunctionCard[] = [
     cardClass: 'guevara',
     title: 'HTML Graffiti',
     text: 'Preview your html,css and javascript codes.',
-    target: 'html-graffiti',
+    target: 'graffiti',
     icon: 'go',
     img: './images/guevara.jpg'
   },
@@ -53,5 +53,13 @@ export const CardList: IFunctionCard[] = [
     target: 'jwt-decoder',
     icon: 'go',
     img: './images/einstein.jpg'
+  },
+  {
+    cardClass: 'presley',
+    title: 'Cloud Codes',
+    text: 'Your codes in cloud, github authorization needed',
+    target: 'cloud-code',
+    icon: 'go',
+    img: './images/presley.jpg'
   }
 ]

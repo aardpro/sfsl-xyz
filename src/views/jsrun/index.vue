@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 21:23:50
+ * @LastEditTime: 2021-04-11 12:33:59
  * @Description: 
 -->
 <template>
@@ -17,23 +17,34 @@
     <div class="btn-col flex-middle">
       <svg-icon
         icon="arrow-right"
+        class-name="pointer"
         font-size="48px"
         :color="color"
         @click="run"
       ></svg-icon>
+      <SaveCloudButton :color="color"></SaveCloudButton>
     </div>
     <div class="run-col">
       <textarea ref="refLog" class="code-textarea form"></textarea>
     </div>
   </div>
 
-  <div class="run-go-home">
+  <div class="top-go-home">
     <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  onBeforeMount,
+  onMounted,
+  provide,
+  watch,
+} from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { JSRUN_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_VIEW = "STORE-JSRUN";
 if (typeof console.stdlog === "undefined") {
   console.stdlog = console.log.bind(console);
@@ -49,6 +60,7 @@ export default defineComponent({
   components: {},
   props: {},
   setup() {
+    const id = ref();
     const refLog = ref();
     const refCode = ref();
     const run = () => {
@@ -76,14 +88,36 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      let storeData = localStorage.getItem(STORE_VIEW);
-      if (!storeData) {
-        storeData = "console.log(123)\nconsole.log('abc')";
-      }
+      let storeData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
       refCode.value.value = storeData;
       run();
     });
 
+    onBeforeMount(() => {
+      id.value = useRoute().params.id;
+    });
+    onBeforeRouteUpdate(async (to) => {
+      id.value = to.params.id;
+    });
+    provide("getId", () => id.value);
+    provide("getContent", () => refCode.value.value);
+
+    watch(
+      () => id.value,
+      async (val) => {
+        if (!val) {
+          return;
+        }
+        const res = await getCode(val);
+        if (res.code) {
+          return;
+        }
+        if (refCode.value) {
+          refCode.value.value = res.data.content;
+          run();
+        }
+      }
+    );
     return {
       refCode,
       refLog,
@@ -112,11 +146,5 @@ export default defineComponent({
       height: 100%;
     }
   }
-}
-.run-go-home {
-  position: fixed;
-  top: 1em;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

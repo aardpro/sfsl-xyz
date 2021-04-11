@@ -6,6 +6,7 @@ body {
 body {
   min-height: 100vh;
   margin: 0;
+  position: relative;
 }
 .position-relative {
   position: relative;
@@ -69,6 +70,10 @@ body {
   overflow: hidden;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .auto-image {
   width: auto;
   height: auto;
@@ -105,6 +110,9 @@ body {
         .card.einstein {
           @include card-theme(aliceblue, #333, #222);
         }
+        .card.presley {
+          @include card-theme(#2a795c, aliceblue, azure);
+        }
       }
     }
   }
@@ -126,4 +134,20 @@ body {
 
 textarea {
   padding: 10px;
+  font-size:18px;
+  font-family: "Helvetica";
+}
+
+.top-go-home {
+  position: fixed;
+  top: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bot-button-block {
+  position: fixed;
+  bottom: 1em;
+  left: 50%;
+  transform: translateX(-50%);
 }

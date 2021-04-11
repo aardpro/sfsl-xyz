@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 21:08:41
+ * @LastEditTime: 2021-04-10 09:54:12
  * @Description: 
 -->
 <template>
@@ -17,6 +17,7 @@
     <div class="btn-col flex-middle">
       <svg-icon
         icon="arrow-right"
+        class-name="pointer"
         font-size="48px"
         :color="color"
         @click="toData"
@@ -31,7 +32,7 @@
     </div>
   </div>
 
-  <div class="run-go-home">
+  <div class="top-go-home">
     <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
@@ -39,6 +40,7 @@
 <script type='ts'>
 import { defineComponent, ref, onMounted } from "vue";
 import { sjson } from "../../utils";
+import { JWT_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_JWT = "STORE-JWT-STRING";
 
 export default defineComponent({
@@ -68,11 +70,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      let storeData = localStorage.getItem(STORE_JWT);
-      if (!storeData) {
-        storeData =
-          "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnQiOiJicm93c2VyIiwiaWQiOiI0MDI4ODBlNDcwNmFmZDIwMDE3MDZiMGY5OWQ0MDAwOCIsInRpbWUiOiIyMDIxLTA0LTA0IDIwOjA3OjAzIiwiZXhwIjoxNjE5MDA5MjUyLCJpYXQiOjE2MTc1MzgwMjN9.6xUKc47X1HaZMh9bTQAho8j1tI2TmpV-EzzJLQiPV49-QfUdjPKOh42jTXg_1y8FDR32tD4froQlAxzw4lxScQ";
-      }
+      let storeData = localStorage.getItem(STORE_JWT) || SAMPLE_DATA;
       refJwt.value.value = storeData;
       toData();
     });
@@ -105,11 +103,5 @@ export default defineComponent({
       height: 100%;
     }
   }
-}
-.run-go-home {
-  position: fixed;
-  top: 1em;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

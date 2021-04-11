@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 21:21:46
+ * @LastEditTime: 2021-04-10 10:18:36
  * @Description: 
 -->
 <template>
@@ -18,6 +18,7 @@
       <div class="btn-div">
         <svg-icon
           icon="arrow-right"
+          class-name="pointer"
           font-size="48px"
           :color="color"
           @click="toData"
@@ -26,6 +27,7 @@
       <div class="btn-div">
         <svg-icon
           icon="arrow-left"
+          class-name="pointer"
           font-size="48px"
           :color="color"
           @click="toJson"
@@ -41,14 +43,14 @@
     </div>
   </div>
 
-  <div class="run-go-home">
+  <div class="top-go-home">
     <go-home font-size="30px" :color="color"></go-home>
   </div>
 </template>
 
 <script type='ts'>
 import { defineComponent, ref, onMounted } from "vue";
-
+import { JSON_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_JSON = "STORE-JSON";
 const STORE_DATA = "STORE-DATA";
 
@@ -81,11 +83,8 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      let storeData = localStorage.getItem(STORE_JSON);
-      if (!storeData) {
-        storeData =
-          '{"name":"aardpro","age":77,"hobbies":["hike","programming","metal music"]}';
-      }
+      let storeData = localStorage.getItem(STORE_JSON) || SAMPLE_DATA;
+
       refJson.value.value = storeData;
       toData();
       storeData = localStorage.getItem(STORE_DATA);
@@ -126,11 +125,5 @@ export default defineComponent({
       height: 100%;
     }
   }
-}
-.run-go-home {
-  position: fixed;
-  top: 1em;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>
