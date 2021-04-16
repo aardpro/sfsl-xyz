@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 17:56:07
+ * @LastEditTime: 2021-04-16 22:50:35
  * @Description: 
 -->
 <template>
@@ -27,6 +27,7 @@ export default defineComponent({
   components: { SnapshotCard },
   props: {},
   setup(props, context) {
+    sessionStorage.setItem("FROM","HOME")
     return { CardList };
   },
 });

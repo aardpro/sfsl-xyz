@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-04-11 10:38:30
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 15:38:52
+ * @LastEditTime: 2021-04-12 22:31:49
  * @Description: 云端代码
 -->
 <template>
@@ -17,9 +17,10 @@
       <div class="col-1">
         <span v-if="!item.isTitle" v-text="index"></span><span v-else>#</span>
       </div>
-      <div class="col-3">{{ item.route }}</div>
-      <div class="col-3">{{ item.createtime }}</div>
-      <div class="col-3">{{ item.modifytime }}</div>
+      <div class="col-2">{{ item.route }}</div>
+      <div class="col-3">{{ item.name }}</div>
+      <div class="col-2">{{ item.createtime }}</div>
+      <div class="col-2">{{ item.modifytime }}</div>
       <div class="col-2 flex-right">
         <template v-if="!item.isTitle"
           ><a @click="askDelete(item)">删除</a>
@@ -28,7 +29,7 @@
       </div>
     </div>
   </template>
-  <div class="flex-middle pad-20">no code in cloud</div>
+  <div v-else class="flex-middle pad-20">no code in cloud</div>
   <div style="position: fixed; top: 1em; right: 1em">
     <go-home font-size="30px" color="#2a795c"></go-home>
   </div>
@@ -49,6 +50,7 @@ export default defineComponent({
         createtime: "创建时间",
         modifytime: "修改时间",
         route: "功能类型",
+        name: "名称",
         isTitle: true,
       },
     ]);
@@ -80,6 +82,7 @@ export default defineComponent({
         },
       });
     };
+    sessionStorage.setItem("FROM","CLOUD-CODE")
     return {
       records,
       askDelete,

@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 14:09:33
+ * @LastEditTime: 2021-04-16 23:10:34
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -52,12 +52,12 @@ export const CardList: IFunctionCard[] = [
     text: 'Decode JWT string and show the contained data',
     target: 'jwt-decoder',
     icon: 'go',
-    img: './images/einstein.jpg'
+    img: './images/einstein.jpg',
   },
   {
     cardClass: 'presley',
     title: 'Cloud Codes',
-    text: 'Your codes in cloud, github authorization needed',
+    text: 'Save and access your codes in cloud, github authorization needed',
     target: 'cloud-code',
     icon: 'go',
     img: './images/presley.jpg'

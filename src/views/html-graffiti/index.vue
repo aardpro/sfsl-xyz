@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 20:15:09
+ * @LastEditTime: 2021-04-16 22:22:28
  * @Description: 
 -->
 <template>
@@ -33,15 +33,8 @@
 </template>
 
 <script type='ts'>
-import {
-  defineComponent,
-  ref,
-  onBeforeMount,
-  onMounted,
-  provide,
-  watch,
-} from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { defineComponent, ref, onMounted, provide } from "vue";
+import { useRoute } from "vue-router";
 import { removeAllChildNodes } from "../../utils";
 import { GRAFFITI_DATA as SAMPLE_DATA } from "../../utils/data";
 import { getCode } from "../../api";
@@ -52,12 +45,24 @@ export default defineComponent({
   components: {},
   props: {},
   setup() {
+    let editor;
     const id = ref();
     const refView = ref();
     const refCode = ref();
+    const getValue = () => {
+      if (editor && editor.getValue) {
+        return editor.getValue();
+      }
+      return "";
+    };
+    const setValue = (str) => {
+      if (editor && editor.setValue) {
+        editor.setValue(str);
+      }
+    };
     const run = () => {
       removeAllChildNodes(refView.value);
-      localStorage.setItem(STORE_VIEW, refCode.value.value);
+      localStorage.setItem(STORE_VIEW, getValue());
       var iframe = document.createElement("iframe");
       iframe.setAttribute("height", "100%");
       iframe.setAttribute("width", "100%");
@@ -74,46 +79,42 @@ export default defineComponent({
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
       <link href="./default.css" rel="stylesheet">
+      <scr`+`ipt src="./shortcuts.js"></scr`+`ipt>
   </he` +
         `ad><bo` +
         `dy>` +
-        refCode.value.value +
+        getValue() +
         `</bo` +
         `dy></ht` +
         `ml>`;
       refView.value.append(iframe);
     };
-    onMounted(() => {
-      let storeData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
-      refCode.value.value = storeData;
+    onMounted(async () => {
+      editor = CodeMirror.fromTextArea(refCode.value, {
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "erlang-dark",
+        tabSize: 2,
+        lineWrapping: true,
+        lineNumbers: true,
+      });
+      id.value = useRoute().params.id;
+      if (id.value) {
+        const res = await getCode(id.value);
+        if (!res.code) {
+          setValue(res.data.content);
+          run();
+          return;
+        }
+      }
+      const storedData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
+      setValue(storedData);
       run();
     });
 
-    onBeforeMount(() => {
-      id.value = useRoute().params.id;
-    });
-    onBeforeRouteUpdate(async (to) => {
-      id.value = to.params.id;
-    });
     provide("getId", () => id.value);
-    provide("getContent", () => refCode.value.value);
+    provide("getContent", () => getValue());
 
-    watch(
-      () => id.value,
-      async (val) => {
-        if (!val) {
-          return;
-        }
-        const res = await getCode(val);
-        if (res.code) {
-          return;
-        }
-        if (refCode.value) {
-          refCode.value.value = res.data.content;
-          run();
-        }
-      }
-    );
     return {
       refCode,
       refView,

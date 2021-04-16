@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-10 00:42:01
+ * @LastEditTime: 2021-04-16 23:08:32
  * @Description: 
 -->
 <template>
@@ -60,8 +60,8 @@
     <div class="row">
       <div class="col-12 flex-left">
         <div class="flex-left">
-          <div id="vue-image-slim-screen"></div>
-          <div id="vue3-image-slim-screen"></div>
+          <div id="vue-image-slim-screen"><textarea id="vue-image-slim-text"></textarea></div>
+          <div id="vue3-image-slim-screen"><textarea id="vue3-image-slim-text"></textarea></div>
           <div class="flex-middle">
             <div class="pad-10">点击按钮选择图片文件</div>
             <vue3-image-slim
@@ -98,14 +98,13 @@
 <script type='ts'>
 import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import Vue3ImageSlim from "vue3-image-slim";
-import CodeFlask from "codeflask";
 
 export default defineComponent({
   name: "VueImageSlim",
   components: { Vue3ImageSlim },
   props: {},
   setup(props, context) {
-    let cfv2, cfv3;
+    let editorV2, editorV3;
     const images = ref([]);
     const w = ref(400);
     const h = ref(300);
@@ -126,11 +125,10 @@ export default defineComponent({
       images.value.push(val);
     };
     const comCodeV2 = computed(
-      () =>`//install and import it for vue2
+      () => `// usage for vue2
 npm install vue-image-slim
 components: { VueImageSlim:() => import("vue-image-slim") }
 
-// how to use in template
 <vue-image-slim
  :w="${w.value}"
  :h="${h.value}"
@@ -140,16 +138,14 @@ components: { VueImageSlim:() => import("vue-image-slim") }
  :disabled="${disabled.value}"
  @getDataURL="getDataURL"
  @getFile="getFile"
-></vue-image-slim>
-`
+></vue-image-slim>`
     );
     const comCodeV3 = computed(
-      () =>`//install and import it for vue3
+      () => `// usage for vue3
 npm install vue3-image-slim
 import Vue3ImageSlim from "vue3-image-slim"
 components: { Vue3ImageSlim }
   
-// how to use in template
 <vue3-image-slim
  :w="${w.value}"
  :h="${h.value}"
@@ -159,8 +155,7 @@ components: { Vue3ImageSlim }
  :disabled="${disabled.value}"
  @getDataURL="getDataURL"
  @getFile="getFile"
-></vue3-image-slim>
-`
+></vue3-image-slim>`
     );
     const askDelete = (index) => {
       images.value.splice(index, 1);
@@ -168,32 +163,44 @@ components: { Vue3ImageSlim }
     watch(
       () => comCodeV2.value,
       (val) => {
-        if (cfv2) {
-          cfv2.updateCode(val);
+        if (editorV2) {
+          editorV2.setValue(comCodeV2.value);
         }
       }
     );
     watch(
       () => comCodeV3.value,
       (val) => {
-        if (cfv3) {
-          cfv3.updateCode(val);
+        if (editorV3) {
+          editorV3.setValue(comCodeV3.value);
         }
       }
     );
     onMounted(() => {
-      cfv2 = new CodeFlask("#vue-image-slim-screen", {
-        language: "js",
-        lineNumbers: true,
-        readonly: true,
-      });
-      cfv2.updateCode(comCodeV2.value);
-      cfv3 = new CodeFlask("#vue3-image-slim-screen", {
-        language: "js",
-        lineNumbers: true,
-        readonly: true,
-      });
-      cfv3.updateCode(comCodeV3.value);
+      editorV2 = CodeMirror.fromTextArea(
+        document.getElementById("vue-image-slim-text"),
+        {
+          mode: "html-hint",
+          lineNumbers: true,
+          theme: "lucario",
+          tabSize: 2,
+          lineWrapping: true,
+          lineNumbers: true,
+        }
+      );
+      editorV2.setValue(comCodeV2.value);
+      editorV3 = CodeMirror.fromTextArea(
+        document.getElementById("vue3-image-slim-text"),
+        {
+          mode: "html-hint",
+          lineNumbers: true,
+          theme: "lucario",
+          tabSize: 3,
+          lineWrapping: true,
+          lineNumbers: true,
+        }
+      );
+      editorV3.setValue(comCodeV3.value);
     });
     return {
       w,
@@ -242,12 +249,12 @@ input[type="checkbox"] {
 #vue-image-slim-screen,
 #vue3-image-slim-screen {
   position: relative;
-  height: 400px;
+  height: 360px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 #vue-image-slim-screen {
-  width: 480px;
+  width: 400px;
 }
 #vue3-image-slim-screen {
   margin: 0 50px;

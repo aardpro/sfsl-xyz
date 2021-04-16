@@ -87,7 +87,7 @@ body {
       .col {
         .card {
           width: 100%;
-          margin-bottom: 1em;
+          margin: 1em auto;
           cursor: pointer;
         }
 
@@ -108,7 +108,7 @@ body {
           @include card-theme(#4a588c, aliceblue, azure);
         }
         .card.einstein {
-          @include card-theme(aliceblue, #333, #222);
+          @include card-theme(#fff, #333, #222, 3px solid aliceblue);
         }
         .card.presley {
           @include card-theme(#2a795c, aliceblue, azure);
@@ -134,7 +134,7 @@ body {
 
 textarea {
   padding: 10px;
-  font-size:18px;
+  font-size: 18px;
   font-family: "Helvetica";
 }
 

@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 12:33:59
+ * @LastEditTime: 2021-04-15 23:02:16
  * @Description: 
 -->
 <template>
@@ -35,26 +35,12 @@
 </template>
 
 <script type='ts'>
-import {
-  defineComponent,
-  ref,
-  onBeforeMount,
-  onMounted,
-  provide,
-  watch,
-} from "vue";
+import { defineComponent, ref, onMounted, provide } from "vue";
 import { getCode } from "../../api";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute } from "vue-router";
 import { JSRUN_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_VIEW = "STORE-JSRUN";
-if (typeof console.stdlog === "undefined") {
-  console.stdlog = console.log.bind(console);
-  console.logs = [];
-  console.log = function () {
-    console.logs.push(...Array.from(arguments));
-    console.stdlog.apply(console, arguments);
-  };
-}
+let editor, editorLog;
 
 export default defineComponent({
   name: "JSRun",
@@ -64,13 +50,29 @@ export default defineComponent({
     const id = ref();
     const refLog = ref();
     const refCode = ref();
+    const getValue = () => {
+      if (editor && editor.getValue) {
+        return editor.getValue();
+      }
+      return "";
+    };
+    const setValue = (str) => {
+      if (editor && editor.setValue) {
+        editor.setValue(str);
+      }
+    };
+    const setLogValue = (str) => {
+      if (editorLog && editorLog.setValue) {
+        editorLog.setValue(str);
+      }
+    };
     const run = () => {
-      localStorage.setItem(STORE_VIEW, refCode.value.value);
+      localStorage.setItem(STORE_VIEW, getValue());
       console.logs.length = 0;
-      refLog.value.value = "Start to run....";
+      setLogValue("Start to run....");
       const t = new Date().valueOf();
       try {
-        eval(refCode.value.value);
+        eval(getValue());
       } catch (err) {
         console.logs.push("error: " + err);
       }
@@ -80,45 +82,51 @@ export default defineComponent({
             typeof cur === "object" && !!cur
               ? JSON.stringify(cur, null, 2)
               : cur;
-          t.push(`${idx + 1}:\t${value}`);
+          t.push(`${value}`);
           return t;
         }, []);
-        refLog.value.value =
-          logs.join("\n") + "\n\n用时:" + (new Date().valueOf() - t) + "ms";
+
+        setLogValue(
+          logs.join("\n") + "\n\n用时:" + (new Date().valueOf() - t) + "ms"
+        );
       }
     };
 
-    onMounted(() => {
-      let storeData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
-      refCode.value.value = storeData;
+    onMounted(async () => {
+      editor = CodeMirror.fromTextArea(refCode.value, {
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "erlang-dark",
+        tabSize: 2,
+        lineWrapping: true,
+        lineNumbers: true,
+      });
+      editorLog = CodeMirror.fromTextArea(refLog.value, {
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "cobalt",
+        tabSize: 2,
+        lineWrapping: true,
+        lineNumbers: true,
+      });
+
+      id.value = useRoute().params.id;
+      if (id.value) {
+        const res = await getCode(id.value);
+        if (!res.code) {
+          setValue(res.data.content);
+          run();
+          return;
+        }
+      }
+      let storedData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
+      setValue(storedData);
       run();
     });
 
-    onBeforeMount(() => {
-      id.value = useRoute().params.id;
-    });
-    onBeforeRouteUpdate(async (to) => {
-      id.value = to.params.id;
-    });
     provide("getId", () => id.value);
-    provide("getContent", () => refCode.value.value);
+    provide("getContent", () => getValue());
 
-    watch(
-      () => id.value,
-      async (val) => {
-        if (!val) {
-          return;
-        }
-        const res = await getCode(val);
-        if (res.code) {
-          return;
-        }
-        if (refCode.value) {
-          refCode.value.value = res.data.content;
-          run();
-        }
-      }
-    );
     return {
       refCode,
       refLog,
@@ -142,10 +150,6 @@ export default defineComponent({
   .run-col {
     flex: 1;
     box-sizing: border-box;
-    .code-textarea {
-      width: 100%;
-      height: 100%;
-    }
   }
 }
 </style>

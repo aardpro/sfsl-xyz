@@ -10,10 +10,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-@mixin card-theme($background-color, $card-title-color, $card-text-color) {
+@mixin card-theme(
+  $background-color,
+  $card-title-color,
+  $card-text-color,
+  $border: none
+) {
   .card-body {
     padding: 1em;
     background-color: $background-color;
+      border: $border;
+    box-sizing: border-box;
     .card-title {
       color: $card-title-color;
       font-family: "Helvetica";

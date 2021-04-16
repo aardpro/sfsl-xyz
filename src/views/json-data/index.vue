@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-10 10:18:36
+ * @LastEditTime: 2021-04-15 22:40:47
  * @Description: 
 -->
 <template>
@@ -52,7 +52,8 @@
 import { defineComponent, ref, onMounted } from "vue";
 import { JSON_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_JSON = "STORE-JSON";
-const STORE_DATA = "STORE-DATA";
+let editorJson, editorData; //editorJson是左侧json框，editorData是右侧数据框
+let dataVal;
 
 export default defineComponent({
   name: "JSRun",
@@ -61,35 +62,71 @@ export default defineComponent({
   setup() {
     const refJson = ref();
     const refData = ref();
-    const dataVal = ref("");
+    const getJsonValue = () => {
+      if (editorJson && editorJson.getValue) {
+        return editorJson.getValue();
+      }
+      return "";
+    };
+    const setJsonValue = (str) => {
+      if (editorJson && editorJson.setValue) {
+        editorJson.setValue(str);
+      }
+    };
+    const getDataValue = () => {
+      if (editorData && editorData.getValue) {
+        return editorData.getValue();
+      }
+      return "";
+    };
+    const setDataValue = (str) => {
+      if (editorData && editorData.setValue) {
+        editorData.setValue(str);
+      }
+    };
+
     const toData = () => {
       try {
-        let data = JSON.parse(refJson.value.value);
-        refData.value.value = JSON.stringify(data, null, 2);
-        localStorage.setItem(STORE_JSON, refJson.value.value);
+        const data = JSON.parse(getJsonValue());
+        setDataValue(JSON.stringify(data, null, 2));
+        localStorage.setItem(STORE_JSON, getJsonValue());
       } catch (e) {
-        refData.value.value = e.message;
+        setDataValue(e.message);
       }
     };
     const toJson = () => {
       try {
-        eval("dataVal.value=" + refData.value.value);
-        localStorage.setItem(STORE_DATA, refData.value.value);
-        refJson.value.value = JSON.stringify(dataVal.value);
+        eval("dataVal=" + getDataValue());
+        const json = JSON.stringify(dataVal);
+        setJsonValue(json);
+        localStorage.setItem(STORE_JSON, json);
       } catch (e) {
-        refJson.value.value = e.message;
-        return;
+        setJsonValue(e.message);
       }
     };
 
     onMounted(() => {
-      let storeData = localStorage.getItem(STORE_JSON) || SAMPLE_DATA;
+      editorJson = CodeMirror.fromTextArea(refJson.value, {
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "erlang-dark",
+        tabSize: 2,
+        lineWrapping: true,
+        lineNumbers: true,
+      });
+      editorData = CodeMirror.fromTextArea(refData.value, {
+        mode: "javascript",
+        lineNumbers: true,
+        theme: "cobalt",
+        tabSize: 2,
+        lineWrapping: true,
+        lineNumbers: true,
+      });
 
-      refJson.value.value = storeData;
-      toData();
-      storeData = localStorage.getItem(STORE_DATA);
-      if (storeData) {
-        refData.value.value = storeData;
+      const storedJson = localStorage.getItem(STORE_JSON) || SAMPLE_DATA;
+      if (storedJson) {
+        setJsonValue(storedJson);
+        toData();
       }
     });
 
