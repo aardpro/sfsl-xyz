@@ -49,17 +49,17 @@
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, onBeforeUnmount } from "vue";
 import { JSON_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_JSON = "STORE-JSON";
-let editorJson, editorData; //editorJson是左侧json框，editorData是右侧数据框
-let dataVal;
 
 export default defineComponent({
   name: "JSRun",
   components: {},
   props: {},
   setup() {
+    let editorJson, editorData; //editorJson是左侧json框，editorData是右侧数据框
+    let dataVal;
     const refJson = ref();
     const refData = ref();
     const getJsonValue = () => {
@@ -129,7 +129,10 @@ export default defineComponent({
         toData();
       }
     });
-
+    onBeforeUnmount(() => {
+      editorJson.toTextArea();
+      editorData.toTextArea();
+    });
     return {
       refJson,
       refData,

@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-04-10 09:55:48
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 16:10:53
+ * @LastEditTime: 2021-04-16 23:42:47
  * @Description: 将结果保存在服务器
 -->
 <template>
@@ -50,12 +50,13 @@ export default defineComponent({
         );
         if (wauth) {
           wauth.document.title = "GITHUB AUTHORIZTION";
-          toast("请通过GITHUB授权注册。如果网速慢，请多次刷新。",10000);
+          toast("请通过GITHUB授权注册。如果网速慢，请多次刷新。", 10000);
         }
         return;
       }
       const content = typeof getContent === "function" ? getContent() : "";
-      if (!content || content.length > 5000) {
+      if (!content || content.length > 5 * 1024) {
+        toast("数据不可以超过5k。", 3000);
         return;
       }
       const data = {

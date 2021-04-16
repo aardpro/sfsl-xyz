@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-15 23:02:16
+ * @LastEditTime: 2021-04-17 00:21:37
  * @Description: 
 -->
 <template>
@@ -35,18 +35,18 @@
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, onMounted, provide } from "vue";
+import { defineComponent, ref, onMounted, onBeforeUnmount, provide } from "vue";
 import { getCode } from "../../api";
 import { useRoute } from "vue-router";
 import { JSRUN_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_VIEW = "STORE-JSRUN";
-let editor, editorLog;
 
 export default defineComponent({
   name: "JSRun",
   components: {},
   props: {},
   setup() {
+    let editor, editorLog;
     const id = ref();
     const refLog = ref();
     const refCode = ref();
@@ -122,6 +122,10 @@ export default defineComponent({
       let storedData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
       setValue(storedData);
       run();
+    });
+    onBeforeUnmount(() => {
+      editor.toTextArea();
+      editorLog.toTextArea();
     });
 
     provide("getId", () => id.value);

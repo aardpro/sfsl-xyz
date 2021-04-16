@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-16 23:08:32
+ * @LastEditTime: 2021-04-17 00:14:39
  * @Description: 
 -->
 <template>
@@ -60,8 +60,12 @@
     <div class="row">
       <div class="col-12 flex-left">
         <div class="flex-left">
-          <div id="vue-image-slim-screen"><textarea id="vue-image-slim-text"></textarea></div>
-          <div id="vue3-image-slim-screen"><textarea id="vue3-image-slim-text"></textarea></div>
+          <div id="vue-image-slim-screen">
+            <textarea id="vue-image-slim-text"></textarea>
+          </div>
+          <div id="vue3-image-slim-screen">
+            <textarea id="vue3-image-slim-text"></textarea>
+          </div>
           <div class="flex-middle">
             <div class="pad-10">点击按钮选择图片文件</div>
             <vue3-image-slim
@@ -96,7 +100,15 @@
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, computed, onMounted, watch } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch,
+  nextTick,
+  onBeforeUnmount,
+} from "vue";
 import Vue3ImageSlim from "vue3-image-slim";
 
 export default defineComponent({
@@ -164,7 +176,7 @@ components: { Vue3ImageSlim }
       () => comCodeV2.value,
       (val) => {
         if (editorV2) {
-          editorV2.setValue(comCodeV2.value);
+          editorV2.setValue(val);
         }
       }
     );
@@ -172,11 +184,11 @@ components: { Vue3ImageSlim }
       () => comCodeV3.value,
       (val) => {
         if (editorV3) {
-          editorV3.setValue(comCodeV3.value);
+          editorV3.setValue(val);
         }
       }
     );
-    onMounted(() => {
+    onMounted(async () => {
       editorV2 = CodeMirror.fromTextArea(
         document.getElementById("vue-image-slim-text"),
         {
@@ -188,7 +200,6 @@ components: { Vue3ImageSlim }
           lineNumbers: true,
         }
       );
-      editorV2.setValue(comCodeV2.value);
       editorV3 = CodeMirror.fromTextArea(
         document.getElementById("vue3-image-slim-text"),
         {
@@ -200,7 +211,12 @@ components: { Vue3ImageSlim }
           lineNumbers: true,
         }
       );
+      editorV2.setValue(comCodeV2.value);
       editorV3.setValue(comCodeV3.value);
+    });
+    onBeforeUnmount(() => {
+      editorV2.toTextArea();
+      editorV3.toTextArea();
     });
     return {
       w,

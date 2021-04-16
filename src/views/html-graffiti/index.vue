@@ -33,7 +33,7 @@
 </template>
 
 <script type='ts'>
-import { defineComponent, ref, onMounted, provide } from "vue";
+import { defineComponent, ref, onMounted, provide, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import { removeAllChildNodes } from "../../utils";
 import { GRAFFITI_DATA as SAMPLE_DATA } from "../../utils/data";
@@ -79,7 +79,9 @@ export default defineComponent({
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
       <link href="./default.css" rel="stylesheet">
-      <scr`+`ipt src="./shortcuts.js"></scr`+`ipt>
+      <scr` +
+        `ipt src="./shortcuts.js"></scr` +
+        `ipt>
   </he` +
         `ad><bo` +
         `dy>` +
@@ -110,6 +112,10 @@ export default defineComponent({
       const storedData = localStorage.getItem(STORE_VIEW) || SAMPLE_DATA;
       setValue(storedData);
       run();
+    });
+
+    onBeforeUnmount(() => {
+      editor.toTextArea();
     });
 
     provide("getId", () => id.value);
