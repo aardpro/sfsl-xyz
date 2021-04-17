@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-24 22:05:02
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-16 22:43:59
+ * @LastEditTime: 2021-04-17 08:33:18
  * @Description: 
 -->
 <template>
@@ -41,7 +41,7 @@
 
 <script type='ts'>
 import { defineComponent, ref, onMounted } from "vue";
-import { sjson } from "../../utils";
+import { decodeJWT } from "../../utils";
 import { JWT_DATA as SAMPLE_DATA } from "../../utils/data";
 const STORE_JWT = "STORE-JWT-STRING";
 
@@ -59,8 +59,7 @@ export default defineComponent({
         return;
       }
       try {
-        str = decodeURIComponent(escape(window.atob(str.split(".")[1])));
-        const data = sjson(str);
+        const data = decodeJWT(str);
         if (data) {
           refData.value.value = JSON.stringify(data, null, 2);
           localStorage.setItem(STORE_JWT, refJwt.value.value);

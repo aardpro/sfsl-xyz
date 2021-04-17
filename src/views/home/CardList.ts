@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-21 13:55:12
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-16 23:10:34
+ * @LastEditTime: 2021-04-17 11:57:12
  * @Description: 功能卡片数据
  */
 interface IFunctionCard {
@@ -14,14 +14,6 @@ interface IFunctionCard {
   img?: string
 }
 export const CardList: IFunctionCard[] = [
-  {
-    cardClass: 'sparrow',
-    title: 'vue-image-slim',
-    text: 'Vue component to crop and optimize your images before you upload them',
-    target: 'vue-image-slim',
-    icon: 'go',
-    img: './images/sparrow.jpg'
-  },
   {
     cardClass: 'guevara',
     title: 'HTML Graffiti',
@@ -45,6 +37,14 @@ export const CardList: IFunctionCard[] = [
     target: 'json-data',
     icon: 'go',
     img: './images/jackson.jpg'
+  },
+  {
+    cardClass: 'sparrow',
+    title: 'vue-image-slim',
+    text: 'Vue component to crop and optimize your images before you upload them',
+    target: 'vue-image-slim',
+    icon: 'go',
+    img: './images/sparrow.jpg'
   },
   {
     cardClass: 'einstein',

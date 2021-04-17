@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-04-10 09:55:48
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-16 23:42:47
+ * @LastEditTime: 2021-04-17 10:12:25
  * @Description: 将结果保存在服务器
 -->
 <template>
@@ -61,9 +61,7 @@ export default defineComponent({
       }
       const data = {
         content,
-        name: "code",
         route: routeName(),
-        featured: 0,
       };
       //修改或者新建代码
       let res;

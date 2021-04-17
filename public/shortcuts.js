@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-04-13 21:48:57
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-16 23:35:12
+ * @LastEditTime: 2021-04-17 09:20:13
  * @Description: 快捷键函数
  */
 
@@ -63,7 +63,7 @@ function append(dom) {
   document.body.appendChild(dom)
 }
 
-function str(data) {
+function jsonstr(data) {
   try {
     return JSON.stringify(data, null, 2)
   } catch (err) {

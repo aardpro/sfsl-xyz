@@ -2,7 +2,7 @@
  * @Author: Aardduke
  * @Date: 2021-02-17 12:12:17
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-11 15:06:37
+ * @LastEditTime: 2021-04-17 07:46:30
  * @Description: 
  */
 import axios, {
@@ -51,6 +51,9 @@ service.interceptors.request.use(
 // 返回data对象
 service.interceptors.response.use(
   async (response) => {
+    if (response.data.code === 401) {
+      localStorage.removeItem("TOKEN")
+    }
     return response
   },
   (error) => {

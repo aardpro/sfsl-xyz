@@ -2,7 +2,7 @@
  * @Author: Aardpro
  * @Date: 2021-03-27 15:40:05
  * @LastEditors: Aardpro
- * @LastEditTime: 2021-04-04 19:26:09
+ * @LastEditTime: 2021-04-17 08:44:20
  * @Description: 
  */
 
@@ -46,4 +46,34 @@ export function isEmpty(myVar: any) {
   } else {
     return !myVar;
   }
+}
+/**
+ * 
+ * @param {String} str JWT字符串
+ * @returns {Object|false} 解码后的对象
+ */
+export function decodeJWT(str: string): any {
+  return sjson(decodeURIComponent(escape(window.atob(str.split(".")[1]))));
+}
+
+/**
+ * 根据localstorage中的TOKEN，返回用户user_id
+*/
+export function getUserId(): string {
+  const token = localStorage.getItem("TOKEN")
+  if (!token) { return ""; }
+  const data = decodeJWT(token)
+  if (!data || !data.user_id) { return ""; }
+  return data.user_id;
+}
+
+/**
+ * 根据localstorage中的TOKEN，返回用户权限级别rank
+*/
+export function getUserRank(): number {
+  const token = localStorage.getItem("TOKEN")
+  if (!token) { return 0; }
+  const data = decodeJWT(token)
+  if (!data || !data.rank) { return 0; }
+  return data.rank;
 }
